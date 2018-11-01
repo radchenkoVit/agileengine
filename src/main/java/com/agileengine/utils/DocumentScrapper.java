@@ -1,17 +1,17 @@
-package com.agileengine;
+package com.agileengine.utils;
 
+import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.agileengine.config.Constant.CSS_LOCATOR_ATTRIBUTE_PATTERN;
+import static java.util.stream.Collectors.toMap;
 
 public class DocumentScrapper {
-    private static Logger LOGGER = LoggerFactory.getLogger(DocumentScrapper.class);
-
     public static Elements findElement(Document document, Map<String, String> attributeMap) {
         Elements foundElement = null;
 
@@ -24,5 +24,17 @@ public class DocumentScrapper {
         }
 
         return foundElement;
+    }
+
+    public static Optional<Map<String, String>> getElementsAttributesMap(Optional<Elements> elements) {
+        return elements.map(buttons ->
+                {
+                    Map<String, String> attributeMap = new HashMap<>();
+                    buttons.iterator().forEachRemaining(element ->
+                            attributeMap.putAll(element.attributes().asList().stream().collect(toMap(Attribute::getKey, Attribute::getValue)))
+                    );
+                    return attributeMap;
+                }
+        );
     }
 }
