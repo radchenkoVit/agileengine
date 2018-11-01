@@ -1,8 +1,12 @@
 package com.agileengine;
 
-public class Run {
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-    public static void main(String[] args) {
-        
+public class Run {
+    private static Logger LOGGER = LoggerFactory.getLogger(Run.class);
+
+    public static void main(String[] fileNames) {
+
     }
 }
